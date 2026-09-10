@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ActivityHeatmap } from '@/components/charts/ActivityHeatmap'
 import { ChartCard } from '@/components/charts/ChartCard'
 import { ShareBar, TrendArea } from '@/components/charts/Charts'
+import { DownloadReport } from '@/components/report/DownloadReport'
 import { PersonChip, personColor } from '@/components/ui/Avatar'
 import { ButtonLink } from '@/components/ui/Button'
 import { RevealCard, SectionHeading } from '@/components/ui/Card'
@@ -179,6 +180,8 @@ export function Overview() {
       </section>
 
       <Moments />
+
+      <DownloadReport />
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <NextCard
