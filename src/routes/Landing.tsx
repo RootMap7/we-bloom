@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Logo } from '@/components/layout/Logo'
 import { Button, ButtonLink } from '@/components/ui/Button'
+import heroImage from '@/hero.png'
 import { fadeRise, revealOnScroll, stagger, transition } from '@/lib/motion'
 import { useStore } from '@/lib/store'
 
@@ -34,67 +35,87 @@ export function Landing() {
 
       <main>
         <section className="shell pb-16 pt-10 sm:pb-24 sm:pt-20">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={stagger(0.08)}
-            className="max-w-[22ch] sm:max-w-[16ch]"
-          >
-            <motion.p
-              variants={fadeRise}
-              className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-clay-600"
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+            <div className="min-w-0">
+              <motion.div initial="hidden" animate="visible" variants={stagger(0.08)}>
+                <motion.p
+                  variants={fadeRise}
+                  className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-clay-600"
+                >
+                  Your conversation, as a story
+                </motion.p>
+                <motion.h1
+                  variants={fadeRise}
+                  className="max-w-[20ch] font-display text-display-xl text-ink text-balance"
+                >
+                  You've said a lot to each other.
+                </motion.h1>
+              </motion.div>
+
+              <motion.p
+                initial="hidden"
+                animate="visible"
+                variants={fadeRise}
+                transition={{ ...transition.base, delay: 0.24 }}
+                className="mt-6 max-w-[52ch] text-lg leading-relaxed text-ink-muted text-pretty sm:text-xl"
+              >
+                We Bloom reads an exported WhatsApp chat and turns it into something worth looking
+                at — the rhythm, the habits, the words you keep coming back to, and the moments
+                that stand out.
+              </motion.p>
+
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={fadeRise}
+                transition={{ ...transition.base, delay: 0.32 }}
+                className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
+              >
+                <ButtonLink to="/upload" size="lg">
+                  Upload your chat
+                </ButtonLink>
+                <Button variant="secondary" size="lg" onClick={loadDemo}>
+                  {phase === 'parsing' || phase === 'analyzing' || phase === 'reading'
+                    ? 'Building the sample…'
+                    : 'See a sample report first'}
+                </Button>
+              </motion.div>
+
+              <motion.p
+                initial="hidden"
+                animate="visible"
+                variants={fadeRise}
+                transition={{ ...transition.base, delay: 0.4 }}
+                className="mt-5 max-w-[46ch] text-sm leading-relaxed text-ink-muted"
+              >
+                Your chat is read in your browser and never uploaded to a server.{' '}
+                <Link
+                  to="/privacy"
+                  className="font-medium text-clay-600 underline underline-offset-4"
+                >
+                  Here's exactly what that means.
+                </Link>
+              </motion.p>
+            </div>
+
+            {/* Second in the document as well as on screen: the headline should
+                reach a phone and a screen reader before the illustration does. */}
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...transition.slow, delay: 0.12 }}
             >
-              Your conversation, as a story
-            </motion.p>
-            <motion.h1
-              variants={fadeRise}
-              className="font-display text-display-xl text-ink text-balance"
-            >
-              You've said a lot to each other.
-            </motion.h1>
-          </motion.div>
-
-          <motion.p
-            initial="hidden"
-            animate="visible"
-            variants={fadeRise}
-            transition={{ ...transition.base, delay: 0.24 }}
-            className="mt-6 max-w-[52ch] text-lg leading-relaxed text-ink-muted text-pretty sm:text-xl"
-          >
-            We Bloom reads an exported WhatsApp chat and turns it into something worth looking
-            at — the rhythm, the habits, the words you keep coming back to, and the moments that
-            stand out.
-          </motion.p>
-
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeRise}
-            transition={{ ...transition.base, delay: 0.32 }}
-            className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
-          >
-            <ButtonLink to="/upload" size="lg">
-              Upload your chat
-            </ButtonLink>
-            <Button variant="secondary" size="lg" onClick={loadDemo}>
-              {phase === 'parsing' || phase === 'analyzing' || phase === 'reading'
-                ? 'Building the sample…'
-                : 'See a sample report first'}
-            </Button>
-          </motion.div>
-
-          <motion.p
-            initial="hidden"
-            animate="visible"
-            variants={fadeRise}
-            transition={{ ...transition.base, delay: 0.4 }}
-            className="mt-5 max-w-[46ch] text-sm leading-relaxed text-ink-muted"
-          >
-            Your chat is read in your browser and never uploaded to a server.{' '}
-            <Link to="/privacy" className="font-medium text-clay-600 underline underline-offset-4">
-              Here's exactly what that means.
-            </Link>
-          </motion.p>
+              <img
+                src={heroImage}
+                width={1024}
+                height={788}
+                alt="An illustration of a We Bloom report: a Chat Overview card reading 18,492 messages across 247 days, a line chart of activity over time, a most active hour of 8:42 PM, and 63% of conversations started by Alex."
+                loading="eager"
+                decoding="async"
+                className="mx-auto h-auto w-full max-w-[34rem] lg:max-w-none"
+              />
+            </motion.div>
+          </div>
         </section>
 
         <Preview />

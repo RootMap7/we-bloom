@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { cn } from '@/lib/cn'
+import logomark from '@/logomark.png'
 
 export function Logo({ className, to = '/' }: { className?: string; to?: string }) {
   return (
@@ -15,19 +16,17 @@ export function Logo({ className, to = '/' }: { className?: string; to?: string 
   )
 }
 
+/** The wordmark carries the name, so the mark itself is decorative. */
 function Mark() {
   return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
+    <img
+      src={logomark}
+      width={22}
+      height={22}
+      alt=""
       aria-hidden="true"
-      className="translate-y-[2px]"
-    >
-      <circle cx="10" cy="6" r="3.4" fill="#E07A5F" />
-      <circle cx="5.6" cy="12" r="3.4" fill="#F2CC8F" />
-      <circle cx="14.4" cy="12" r="3.4" fill="#81B29A" opacity="0.9" />
-    </svg>
+      decoding="async"
+      className="h-[22px] w-[22px] translate-y-[2px]"
+    />
   )
 }
