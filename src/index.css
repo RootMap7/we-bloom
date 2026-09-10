@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Motion tokens — see CLAUDE.md §Motion */
+    --motion-fast: 200ms;
+    --motion-base: 350ms;
+    --motion-slow: 600ms;
+    --ease-bloom: cubic-bezier(0.22, 1, 0.36, 1);
+
+    /* Spacing rhythm */
+    --gutter: 1.25rem;
+    --shell-max: 1180px;
+
+    color-scheme: light;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --gutter: 2rem;
+    }
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream font-sans text-ink antialiased;
+    /* Never allow accidental horizontal overflow — PRODUCT.md §32 */
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+  }
+
+  #root {
+    min-height: 100dvh;
+    isolation: isolate;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+    font-variation-settings: 'SOFT' 20, 'WONK' 1;
+  }
+
+  /* Visible focus everywhere — PRODUCT.md §41 */
+  :focus-visible {
+    @apply outline-none ring-2 ring-clay-500 ring-offset-2 ring-offset-cream;
+    border-radius: 0.5rem;
+  }
+
+  ::selection {
+    @apply bg-honey-200 text-ink;
+  }
+}
+
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: var(--shell-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* Tabular figures keep counting numbers from jittering */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  .card-base {
+    @apply rounded-card border border-surface-line bg-surface shadow-soft;
+  }
+
+  .skeleton {
+    @apply rounded-lg bg-surface-sunk;
+    background-image: linear-gradient(
+      90deg,
+      theme('colors.surface.sunk') 0%,
+      rgba(255, 255, 255, 0.85) 50%,
+      theme('colors.surface.sunk') 100%
+    );
+    background-size: 200% 100%;
+    @apply animate-shimmer;
+  }
+
+  /* Horizontal scroll containers (heatmap on mobile) */
+  .scroll-x {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .scroll-x::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .scroll-x::-webkit-scrollbar-thumb {
+    @apply rounded-pill bg-surface-line;
+  }
+}
+
+@layer utilities {
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+/* PRODUCT.md §42 — respect reduced motion, globally and unconditionally */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
