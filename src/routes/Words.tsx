@@ -428,9 +428,10 @@ function WordExplorer({
           </div>
 
           <p className="text-xs leading-relaxed text-ink-faint">
-            <Badge tone="neutral">Counts only</Badge>{' '}
-            We show how often a word appears, never the messages around it. The sentences stay
-            yours.
+            <Badge tone="neutral">In memory only</Badge>{' '}
+            This panel shows counts. To read the lines a word appears in, open the word cloud on
+            the Memories page — it quotes from the copy of the conversation held in this tab, which
+            is never written to disk or sent anywhere.
           </p>
         </div>
       ) : null}

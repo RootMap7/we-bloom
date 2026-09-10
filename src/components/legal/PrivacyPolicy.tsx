@@ -63,6 +63,13 @@ export function PrivacyPolicy() {
             as the page is open.
           </p>
           <p>
+            The parsed messages themselves are also held in memory, for the same period. The games,
+            the word cloud and the "on this day" section quote real lines back to you, and they can
+            only do that from the actual conversation. That copy exists in this tab and nowhere
+            else: it is never written to storage, never included in a downloaded PDF, and discarded
+            the moment you reload or close the page.
+          </p>
+          <p>
             No part of that process involves a network request. We do not receive your file, your
             messages, your contacts' names, or the statistics derived from them. Closing or
             reloading the tab discards everything unless you have turned storage on.
@@ -83,8 +90,9 @@ export function PrivacyPolicy() {
               IndexedDB database named{' '}
               <code className="rounded bg-surface px-1.5 py-0.5 text-sm">we-bloom</code>. This
               contains the statistics, the participant names as they appeared in the export, and
-              any names you have changed. It does not contain your message text; the raw
-              conversation is discarded once the report exists.
+              any names you have changed. It does not contain your message text. That is why a
+              report restored from storage cannot run the games or quote a word back to you: those
+              features tell you to upload the export again rather than reaching for anything saved.
             </li>
           </ul>
           <p>
@@ -159,6 +167,11 @@ export function PrivacyPolicy() {
             Where the application offers to share a Wrapped slide, it hands the text to your
             operating system's own share sheet or clipboard. It does not post anywhere on your
             behalf.
+          </p>
+          <p>
+            The games keep your score for the length of the round and nothing beyond it. No
+            leaderboard, no history, no record of which questions you got wrong. The only thing
+            they remember between visits is whether you turned the sound off.
           </p>
         </Clause>
 
