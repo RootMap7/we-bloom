@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Logo } from '@/components/layout/Logo'
+import { PrivacyPolicy } from '@/components/legal/PrivacyPolicy'
 import { Button, ButtonLink } from '@/components/ui/Button'
 import { Card, SectionHeading } from '@/components/ui/Card'
 import { Badge, Toggle } from '@/components/ui/Controls'
@@ -65,7 +66,12 @@ export function Privacy() {
         </h1>
         <p className="mt-4 text-lg leading-relaxed text-ink-muted text-pretty">
           A WhatsApp export is one of the most personal files you own. This page describes exactly
-          what We Bloom does with it — no more, and no less.
+          what We Bloom does with it — no more, and no less. The plain-language version comes
+          first;{' '}
+          <a href="#policy" className="font-medium text-clay-600 underline underline-offset-4">
+            the formal policy
+          </a>{' '}
+          is at the bottom.
         </p>
 
         <div className="mt-10 space-y-10">
@@ -206,9 +212,14 @@ export function Privacy() {
               <li>No AI service, and no server, sees any part of it.</li>
               <li>Nothing is stored unless you switch storage on.</li>
               <li>What gets stored is the computed report, not your messages.</li>
+              <li>A downloaded PDF holds headline numbers only — no message text.</li>
               <li>You can delete all of it from this page, in one click.</li>
             </ul>
           </Section>
+
+          <hr className="border-surface-line" />
+
+          <PrivacyPolicy />
         </div>
 
         <p className="mt-12 text-sm leading-relaxed text-ink-faint text-pretty">
