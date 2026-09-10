@@ -9,7 +9,7 @@ import {
   type ReactNode,
 } from 'react'
 import type { Analytics, AnalyticsConfig, Insight, WrappedSlideData } from './analytics/types'
-import type { ParseWarning } from './parser/types'
+import type { Message, ParseWarning } from './parser/types'
 import { buildInsights } from './insights'
 import { buildWrapped } from './wrapped'
 import { generateMockExport } from './mock'
@@ -35,6 +35,13 @@ interface State {
   progress: number
   progressLabel: string
   analytics: Analytics | null
+  /**
+   * The parsed conversation, in memory for this tab only. Needed by the games,
+   * the word cloud and the throwback section, which quote real sentences.
+   * Never persisted: a report restored from storage arrives with this empty,
+   * and the features that need it say so rather than inventing quotes.
+   */
+  messages: Message[]
   warnings: ParseWarning[]
   error: AppError | null
   /** Real name → display name. Defaults to identity. */
@@ -51,7 +58,7 @@ type Action =
   | { type: 'start'; label: string; isDemo: boolean }
   | { type: 'progress'; fraction: number; label: string }
   | { type: 'phase'; phase: Phase }
-  | { type: 'ready'; analytics: Analytics; warnings: ParseWarning[] }
+  | { type: 'ready'; analytics: Analytics; messages: Message[]; warnings: ParseWarning[] }
   | { type: 'error'; error: AppError }
   | { type: 'alias'; from: string; to: string }
   | { type: 'restore'; analytics: Analytics; aliases: Record<string, string>; label: string }
@@ -63,6 +70,7 @@ const initialState: State = {
   progress: 0,
   progressLabel: '',
   analytics: null,
+  messages: [],
   warnings: [],
   error: null,
   aliases: {},
@@ -83,6 +91,7 @@ function reducer(state: State, action: Action): State {
         progress: 0,
         progressLabel: 'Opening the file…',
         analytics: null,
+        messages: [],
         warnings: [],
         error: null,
         aliases: {},
@@ -105,6 +114,7 @@ function reducer(state: State, action: Action): State {
         progress: 1,
         progressLabel: '',
         analytics: action.analytics,
+        messages: action.messages,
         warnings: action.warnings,
         error: null,
         aliases: identityAliases(action.analytics.meta.participants),
@@ -119,6 +129,8 @@ function reducer(state: State, action: Action): State {
         phase: 'ready',
         progress: 1,
         analytics: action.analytics,
+        // Storage holds no message text, so a restored report has no quotes.
+        messages: [],
         aliases: {
           ...identityAliases(action.analytics.meta.participants),
           ...action.aliases,
@@ -183,8 +195,17 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         dispatch({ type: 'error', error: { code: msg.code, message: msg.message, hint: msg.hint } })
         return
       }
-      const payload = msg.payload as { analytics: Analytics; warnings: ParseWarning[] }
-      dispatch({ type: 'ready', analytics: payload.analytics, warnings: payload.warnings })
+      const payload = msg.payload as {
+        analytics: Analytics
+        messages: Message[]
+        warnings: ParseWarning[]
+      }
+      dispatch({
+        type: 'ready',
+        analytics: payload.analytics,
+        messages: payload.messages ?? [],
+        warnings: payload.warnings,
+      })
     }
 
     worker.onerror = () => {

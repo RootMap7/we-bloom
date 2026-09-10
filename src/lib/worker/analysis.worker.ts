@@ -46,6 +46,10 @@ ctx.addEventListener('message', (event: MessageEvent<AnalyseRequest>) => {
       type: 'done',
       payload: {
         analytics,
+        // Messages travel back for the games, the word cloud and the
+        // throwback section, which all need real sentences. They are held in
+        // memory by the store and never persisted — see lib/storage.ts.
+        messages: parsed.messages,
         warnings: parsed.warnings,
         dateOrder: parsed.dateOrder,
         dateOrderAmbiguous: parsed.dateOrderAmbiguous,
