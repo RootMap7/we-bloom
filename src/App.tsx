@@ -20,6 +20,8 @@ const Conversations = lazy(() =>
   import('./routes/Conversations').then((m) => ({ default: m.Conversations })),
 )
 const Insights = lazy(() => import('./routes/Insights').then((m) => ({ default: m.Insights })))
+const Games = lazy(() => import('./routes/Games').then((m) => ({ default: m.Games })))
+const Memories = lazy(() => import('./routes/Memories').then((m) => ({ default: m.Memories })))
 const Ask = lazy(() => import('./routes/Ask').then((m) => ({ default: m.Ask })))
 const Wrapped = lazy(() => import('./routes/Wrapped').then((m) => ({ default: m.Wrapped })))
 const Privacy = lazy(() => import('./routes/Privacy').then((m) => ({ default: m.Privacy })))
@@ -58,6 +60,8 @@ export function App() {
           <Route path="media" element={<Media />} />
           <Route path="conversations" element={<Conversations />} />
           <Route path="insights" element={<Insights />} />
+          <Route path="games" element={<Games />} />
+          <Route path="memories" element={<Memories />} />
           <Route path="ask" element={<Ask />} />
         </Route>
 

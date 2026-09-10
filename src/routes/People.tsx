@@ -1,5 +1,6 @@
 import { ChartCard } from '@/components/charts/ChartCard'
 import { Bars, ShareBar } from '@/components/charts/Charts'
+import { SecretTap } from '@/components/easter/SecretTap'
 import { Avatar, personColor } from '@/components/ui/Avatar'
 import { RevealCard, SectionHeading } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Controls'
@@ -74,7 +75,10 @@ function PersonPanel({
   return (
     <RevealCard delay={index * 0.05} className="overflow-hidden">
       <div className="mb-6 flex flex-wrap items-center gap-4">
-        <Avatar name={display(person.author)} participants={raw.map(display)} size="lg" />
+        {/* Five rapid taps on the avatar reveal the hidden message. */}
+        <SecretTap>
+          <Avatar name={display(person.author)} participants={raw.map(display)} size="lg" />
+        </SecretTap>
         <div className="min-w-0">
           <h3 className="font-display text-display-sm text-ink">{display(person.author)}</h3>
           <p className="mt-0.5 text-sm text-ink-muted">

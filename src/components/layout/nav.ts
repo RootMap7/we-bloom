@@ -18,6 +18,8 @@ export const PRIMARY_NAV: NavItem[] = [
 ]
 
 export const SECONDARY_NAV: NavItem[] = [
+  { to: '/report/games', label: 'Games', icon: '◈' },
+  { to: '/report/memories', label: 'Memories', icon: '◷' },
   { to: '/report/words', label: 'Words', icon: '❝' },
   { to: '/report/emojis', label: 'Emojis', icon: '☺' },
   { to: '/report/media', label: 'Media', icon: '▣' },
